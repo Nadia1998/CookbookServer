@@ -143,6 +143,9 @@ public class ObradaZahtevaNit extends Thread {
 					kraj = true;
 
 					break;
+					default: kraj = true;
+					break;
+						
 				}
 				posaljiOdgovor(so);
 

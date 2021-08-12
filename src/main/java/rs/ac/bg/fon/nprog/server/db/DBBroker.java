@@ -292,7 +292,7 @@ public class DBBroker {
 
 	public ArrayList<Recept> filterPremaNazivu(String naziv) throws SQLException, Exception {
 		ArrayList<Recept> receptiPremaNazivu = new ArrayList<>();
-		String upit = "SELECT * FROM recept r JOIN sastojak s ON r.receptID=s.receptID WHERE r.naziv LIKE '%" + naziv
+		String upit = "SELECT * FROM recept r WHERE r.naziv LIKE '%" + naziv
 				+ "%'";
 		Statement s = conn.createStatement();
 		ResultSet rs = s.executeQuery(upit);
@@ -320,7 +320,7 @@ public class DBBroker {
 
 	public ArrayList<Recept> filterPremaVP(EnumVremePripreme vremePripreme) throws SQLException, Exception {
 		ArrayList<Recept> receptiPremaVP = new ArrayList<>();
-		String upit = "SELECT * FROM recept r JOIN sastojak s ON r.receptID=s.receptID WHERE r.vremePripreme LIKE '%"
+		String upit = "SELECT * FROM recept r WHERE r.vremePripreme LIKE '%"
 				+ vremePripreme.toString() + "%'";
 		Statement s = conn.createStatement();
 		ResultSet rs = s.executeQuery(upit);
@@ -347,8 +347,7 @@ public class DBBroker {
 
 	public ArrayList<Recept> filterPremaVJ(EnumVrsteJela vrstaJela) throws SQLException, Exception {
 		ArrayList<Recept> receptiPremaVJ = new ArrayList<>();
-		String upit = "SELECT * FROM recept r JOIN sastojak s ON r.receptID=s.receptID WHERE r.vrstaJela LIKE '%"
-				+ vrstaJela.toString() + "%'";
+		String upit = "SELECT * FROM recept r WHERE r.vrstaJela LIKE '"+ vrstaJela.toString() + "'";
 		Statement s = conn.createStatement();
 		ResultSet rs = s.executeQuery(upit);
 		while (rs.next()) {
@@ -366,7 +365,9 @@ public class DBBroker {
 			r.setSastojci(sastojci);
 			receptiPremaVJ.add(r);
 		}
-		System.out.println("recept :" + receptiPremaVJ.get(0).getNaziv());
+		rs.close();
+		s.close();
+		System.out.println(receptiPremaVJ.size());
 		if (receptiPremaVJ.isEmpty()) {
 			throw new Exception("Nema recepta koje spada u tu vrstu jela");
 		}
