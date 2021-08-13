@@ -36,6 +36,7 @@ public class ObradaZahtevaNit extends Thread {
 	@Override
 	public void run() {
 		try {
+			
 			while (!kraj) {
 				KlijentskiZahtev kz = primiZahtev();
 				ServerskiOdgovor so = new ServerskiOdgovor();
