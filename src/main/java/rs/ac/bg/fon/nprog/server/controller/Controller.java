@@ -6,7 +6,6 @@ import rs.ac.bg.fon.nprog.library.domen.EnumVrsteJela;
 import rs.ac.bg.fon.nprog.library.domen.Korisnik;
 import rs.ac.bg.fon.nprog.library.domen.Recept;
 import rs.ac.bg.fon.nprog.library.domen.Sastojak;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
