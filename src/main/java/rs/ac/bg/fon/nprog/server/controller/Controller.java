@@ -6,10 +6,19 @@ import rs.ac.bg.fon.nprog.library.domen.EnumVrsteJela;
 import rs.ac.bg.fon.nprog.library.domen.Korisnik;
 import rs.ac.bg.fon.nprog.library.domen.Recept;
 import rs.ac.bg.fon.nprog.library.domen.Sastojak;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.html.HTMLEditorKit.Parser;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonWriter;
 
 
 public class Controller {
@@ -96,9 +105,40 @@ public class Controller {
 		db.connect();
 		db.driverUpload();
 		boolean uspesno = db.obrisiRecept(r);
-
+        if(uspesno) {
+        	sacuvajUJSON(r);
+        }
 		return uspesno;
 	}
+
+	private void sacuvajUJSON(Recept r) {
+		JSONObject receptObrisan = new JSONObject();
+        receptObrisan.put("Korisnik:", r.getKorisnik().getIme());
+        receptObrisan.put("Naziv:", r.getNaziv());
+        receptObrisan.put("Nivo tezine:", r.getNivoTezine().toString());
+        receptObrisan.put("Vreme pripreme:", r.getVremePripreme().toString());
+        receptObrisan.put("Vrsta jela:", r.getVrstaJela().toString());
+        receptObrisan.put("Kategorija recepta:", r.getKategorijaRecepta().toString());
+        receptObrisan.put("Opis recepta:", r.getOpisRecepta());
+        
+        JsonParser jsonParser = new JsonParser();
+
+        try {
+            Object obj = jsonParser.parse(new FileReader("C:\\Users\\Nadia\\eclipse-workspace\\CookbookServer\\obrisani.json"));
+            
+
+            FileWriter file = new FileWriter("C:\\Users\\Nadia\\eclipse-workspace\\CookbookServer\\obrisani.json",true);
+            file.write(receptObrisan.toString());
+            file.flush();
+            file.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+		
+	}
+
 
 	public Recept izmeniRecept(Recept receptZaIzmenu) throws Exception {
 		db.connect();
