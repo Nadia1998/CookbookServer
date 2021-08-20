@@ -174,11 +174,15 @@ public class DBBroker {
 				r.setReceptId(rs.getInt("receptID"));
 				r.setNaziv(rs.getString("naziv"));
 				r.setVremePripreme(EnumVremePripreme.fromStringToEnum(rs.getString("vremePripreme")));
-				if(EnumNivoTezine.fromStringToEnum(rs.getString("nivoTezine"))!=null) {
+				if (EnumNivoTezine.fromStringToEnum(rs.getString("nivoTezine")) != null) {
 					r.setNivoTezine(EnumNivoTezine.fromStringToEnum(rs.getString("nivoTezine")));
 				}
-				r.setVrstaJela(EnumVrsteJela.fromStringToEnum(rs.getString("vrstaJela")));
-				r.setKategorijaRecepta(EnumKategorijaRecepta.fromStringToEnum(rs.getString("kategorijaRecepta")));
+				if (EnumVrsteJela.fromStringToEnum(rs.getString("vrstaJela")) != null) {
+					r.setVrstaJela(EnumVrsteJela.fromStringToEnum(rs.getString("vrstaJela")));
+				}
+				if (EnumKategorijaRecepta.fromStringToEnum(rs.getString("kategorijaRecepta")) != null) {
+					r.setKategorijaRecepta(EnumKategorijaRecepta.fromStringToEnum(rs.getString("kategorijaRecepta")));
+				}
 				r.setOpisRecepta(rs.getString("opisRecepta"));
 				int idKorisnika = rs.getInt("korisnikID");
 
@@ -309,9 +313,12 @@ public class DBBroker {
 			r.setReceptId(rs.getInt("r.receptID"));
 			r.setNaziv(rs.getString("r.naziv"));
 			r.setVremePripreme(EnumVremePripreme.fromStringToEnum(rs.getString("r.vremePripreme")));
-			r.setNivoTezine(EnumNivoTezine.fromStringToEnum(rs.getString("r.nivoTezine")));
-			r.setVrstaJela(EnumVrsteJela.fromStringToEnum(rs.getString("r.vrstaJela")));
-			r.setKategorijaRecepta(EnumKategorijaRecepta.fromStringToEnum(rs.getString("r.kategorijaRecepta")));
+			if (EnumNivoTezine.fromStringToEnum(rs.getString("r.nivoTezine")) != null)
+				r.setNivoTezine(EnumNivoTezine.fromStringToEnum(rs.getString("r.nivoTezine")));
+			if (EnumVrsteJela.fromStringToEnum(rs.getString("r.vrstaJela")) != null)
+				r.setVrstaJela(EnumVrsteJela.fromStringToEnum(rs.getString("r.vrstaJela")));
+			if ((EnumKategorijaRecepta.fromStringToEnum(rs.getString("r.kategorijaRecepta")) != null))
+				r.setKategorijaRecepta(EnumKategorijaRecepta.fromStringToEnum(rs.getString("r.kategorijaRecepta")));
 			r.setOpisRecepta(rs.getString("r.opisRecepta"));
 			Korisnik k = vratiKorisnikaPremaID(rs.getInt("r.korisnikID"));
 			r.setKorisnik(k);
@@ -336,9 +343,12 @@ public class DBBroker {
 			r.setReceptId(rs.getInt("r.receptID"));
 			r.setNaziv(rs.getString("r.naziv"));
 			r.setVremePripreme(EnumVremePripreme.fromStringToEnum(rs.getString("r.vremePripreme")));
-			r.setNivoTezine(EnumNivoTezine.fromStringToEnum(rs.getString("r.nivoTezine")));
-			r.setVrstaJela(EnumVrsteJela.fromStringToEnum(rs.getString("r.vrstaJela")));
-			r.setKategorijaRecepta(EnumKategorijaRecepta.fromStringToEnum(rs.getString("r.kategorijaRecepta")));
+			if (EnumNivoTezine.fromStringToEnum(rs.getString("r.nivoTezine")) != null)
+				r.setNivoTezine(EnumNivoTezine.fromStringToEnum(rs.getString("r.nivoTezine")));
+			if (EnumVrsteJela.fromStringToEnum(rs.getString("r.vrstaJela")) != null)
+				r.setVrstaJela(EnumVrsteJela.fromStringToEnum(rs.getString("r.vrstaJela")));
+			if ((EnumKategorijaRecepta.fromStringToEnum(rs.getString("r.kategorijaRecepta")) != null))
+				r.setKategorijaRecepta(EnumKategorijaRecepta.fromStringToEnum(rs.getString("r.kategorijaRecepta")));
 			r.setOpisRecepta(rs.getString("r.opisRecepta"));
 			Korisnik k = vratiKorisnikaPremaID(rs.getInt("r.korisnikID"));
 			r.setKorisnik(k);
@@ -362,9 +372,12 @@ public class DBBroker {
 			r.setReceptId(rs.getInt("r.receptID"));
 			r.setNaziv(rs.getString("r.naziv"));
 			r.setVremePripreme(EnumVremePripreme.fromStringToEnum(rs.getString("r.vremePripreme")));
-			r.setNivoTezine(EnumNivoTezine.fromStringToEnum(rs.getString("r.nivoTezine")));
-			r.setVrstaJela(EnumVrsteJela.fromStringToEnum(rs.getString("r.vrstaJela")));
-			r.setKategorijaRecepta(EnumKategorijaRecepta.fromStringToEnum(rs.getString("r.kategorijaRecepta")));
+			if (EnumNivoTezine.fromStringToEnum(rs.getString("r.nivoTezine")) != null)
+				r.setNivoTezine(EnumNivoTezine.fromStringToEnum(rs.getString("r.nivoTezine")));
+			if (EnumVrsteJela.fromStringToEnum(rs.getString("r.vrstaJela")) != null)
+				r.setVrstaJela(EnumVrsteJela.fromStringToEnum(rs.getString("r.vrstaJela")));
+			if ((EnumKategorijaRecepta.fromStringToEnum(rs.getString("r.kategorijaRecepta")) != null))
+				r.setKategorijaRecepta(EnumKategorijaRecepta.fromStringToEnum(rs.getString("r.kategorijaRecepta")));
 			r.setOpisRecepta(rs.getString("r.opisRecepta"));
 			Korisnik k = vratiKorisnikaPremaID(rs.getInt("r.korisnikID"));
 			r.setKorisnik(k);
