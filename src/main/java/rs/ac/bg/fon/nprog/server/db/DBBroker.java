@@ -174,7 +174,9 @@ public class DBBroker {
 				r.setReceptId(rs.getInt("receptID"));
 				r.setNaziv(rs.getString("naziv"));
 				r.setVremePripreme(EnumVremePripreme.fromStringToEnum(rs.getString("vremePripreme")));
-				r.setNivoTezine(EnumNivoTezine.fromStringToEnum(rs.getString("nivoTezine")));
+				if(EnumNivoTezine.fromStringToEnum(rs.getString("nivoTezine"))!=null) {
+					r.setNivoTezine(EnumNivoTezine.fromStringToEnum(rs.getString("nivoTezine")));
+				}
 				r.setVrstaJela(EnumVrsteJela.fromStringToEnum(rs.getString("vrstaJela")));
 				r.setKategorijaRecepta(EnumKategorijaRecepta.fromStringToEnum(rs.getString("kategorijaRecepta")));
 				r.setOpisRecepta(rs.getString("opisRecepta"));
