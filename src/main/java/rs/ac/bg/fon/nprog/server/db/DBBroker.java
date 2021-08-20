@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  * @author Nadia
  */
 public class DBBroker {
-
+    private static DBBroker instance;
 	Connection conn;
 
 	public void driverUpload() throws ClassNotFoundException {
@@ -45,6 +45,11 @@ public class DBBroker {
 
 	public void rollback() throws SQLException {
 		conn.rollback();
+	}
+	public static DBBroker getInstance() {
+		if(instance==null)
+			instance=new DBBroker();
+		return instance;
 	}
 
 	public int vratiIDRecepta() {

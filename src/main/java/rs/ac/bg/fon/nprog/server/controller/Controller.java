@@ -47,11 +47,11 @@ public class Controller {
 	/**
 	 * Prijavljuje korisnika na sistem.
 	 * 
-	 * @param neulogovan Korisnik za logovanje kao Korisnik
+	 * @param neulogovan Korisnik za logovanje kao Korisnik.
 	 * 
-	 * @return k ulogovan korisnik kao Korisnik 
+	 * @return Odgovor od servera kao ServerskiOdgovor.
 	 * 
-	 * @throws Exception Izuzetak ukoliko ne uspe povezivanje sa bazom
+	 * @throws Exception Izuzetak ukoliko ne uspe povezivanje sa bazom.
 	 * 
 	 */
 
@@ -75,7 +75,7 @@ public class Controller {
 	 * 
 	 * @param receptNesacuvan Recept za cuvanje kao Recept.
 	 * 
-	 * @return sacuvan Recept koji je sacuvan kao Recept.
+	 * @return Odgovor od servera kao ServerskiOdgovor.
 	 * 
 	 * @throws Exception Ukoliko ne uspe povezivanje sa bazom.
 	 * 
@@ -94,7 +94,7 @@ public class Controller {
 	 * 
 	 * @param sastojci Lista sastojaka kao List.
 	 * 
-	 * @return boolean Odgovor o sacuvanoj listi kao boolean.
+	 * @return Odgovor od servera kao ServerskiOdgovor.
 	 * 
 	 * @throws Exception  Ukoliko ne uspe povezivanje sa bazom.
 	 */
@@ -116,7 +116,7 @@ public class Controller {
 	/**
 	 * Vraca listu recepata.
 	 * 
-	 * @return recepti Lista recepata kao List.
+	 * @return Odgovor od servera kao ServerskiOdgovor.
 	 * 
 	 * @throws Exception  Ukoliko ne uspe povezivanje sa bazom.
 	 */
@@ -133,7 +133,7 @@ public class Controller {
 	 * 
 	 * @param r Recept kao Recept.
 	 * 
-	 * @return sastojci Lista sastojaka kao List.
+	 * @return Odgovor od servera kao ServerskiOdgovor.
 	 * 
 	 * @throws Exception  Ukoliko ne uspe povezivanje sa bazom.
 	 */
@@ -150,7 +150,7 @@ public class Controller {
 	 * 
 	 * @param r Recept kao Recept.
 	 * 
-	 * @return uspesno Uspesnost cuvanja kao boolean.
+	 * @return Odgovor od servera kao ServerskiOdgovor.
 	 * 
 	 * @throws Exception  Ukoliko ne uspe povezivanje sa bazom.
 	 */
@@ -167,7 +167,7 @@ public class Controller {
 	 * 
 	 * @param receptZaIzmenu Recept koji se menja kao Recept.
 	 * 
-	 * @return izmenjen Recept izmenjen kao Recept.
+	 * @return Odgovor od servera kao ServerskiOdgovor.
 	 * 
 	 * @throws Exception  Ukoliko ne uspe povezivanje sa bazom
 	 */
@@ -185,7 +185,7 @@ public class Controller {
 	 * 
 	 * @param naziv Naziv recepta kao String.
 	 * 
-	 * @return recepti Lista recepata kao List.
+	 * @return Odgovor od servera kao ServerskiOdgovor.
 	 * 
 	 * @throws Exception Ukoliko ne uspe povezivanje sa bazom.
 	 */
@@ -207,7 +207,7 @@ public class Controller {
 	 * 
 	 * @param vremePripreme Vreme pripreme kao EnumVremePripreme.
 	 * 
-	 * @return recepti Lista recepata kao List.
+	 * @return Odgovor od servera kao ServerskiOdgovor.
 	 * 
 	 * @throws Exception  Ukoliko ne uspe povezivanje sa bazom.
 	 */
@@ -230,7 +230,7 @@ public class Controller {
 	 * 
 	 * @param vrstaJela Vrsta jela kao EnumVrstaJela.
 	 * 
-	 * @return recepti Lista recepata kao List.
+	 * @return Odgovor od servera kao ServerskiOdgovor.
 	 * 
 	 * @throws Exception  Ukoliko ne uspe povezivanje sa bazom.
 	 */
