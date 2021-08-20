@@ -351,7 +351,7 @@ public class DBBroker {
 
 	public ArrayList<Recept> filterPremaVJ(EnumVrsteJela vrstaJela) throws SQLException, Exception {
 		ArrayList<Recept> receptiPremaVJ = new ArrayList<>();
-		String upit = "SELECT * FROM recept r WHERE r.vrstaJela LIKE '%" + vrstaJela.toString() + "%'";
+		String upit = "SELECT * FROM recept r WHERE r.vrstaJela LIKE '" + vrstaJela.toString() + "'";
 		Statement s = conn.createStatement();
 		ResultSet rs = s.executeQuery(upit);
 		while (rs.next()) {
