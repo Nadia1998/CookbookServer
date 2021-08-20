@@ -25,6 +25,7 @@ import java.util.logging.Logger;
  */
 public class DBBroker {
 	private static DBBroker instance;
+
 	Connection conn;
 
 	public static DBBroker getInstance() {
