@@ -24,8 +24,14 @@ import java.util.logging.Logger;
  * @author Nadia
  */
 public class DBBroker {
-
+	private static DBBroker instance;
 	Connection conn;
+
+	public static DBBroker getInstance() {
+		if (instance == null)
+			instance = new DBBroker();
+		return instance;
+	}
 
 	public void driverUpload() throws ClassNotFoundException {
 		Class.forName("com.mysql.jdbc.Driver");
@@ -292,8 +298,7 @@ public class DBBroker {
 
 	public ArrayList<Recept> filterPremaNazivu(String naziv) throws SQLException, Exception {
 		ArrayList<Recept> receptiPremaNazivu = new ArrayList<>();
-		String upit = "SELECT * FROM recept r WHERE r.naziv LIKE '%" + naziv
-				+ "%'";
+		String upit = "SELECT * FROM recept r WHERE r.naziv LIKE '%" + naziv + "%'";
 		Statement s = conn.createStatement();
 		ResultSet rs = s.executeQuery(upit);
 		while (rs.next()) {
@@ -320,8 +325,7 @@ public class DBBroker {
 
 	public ArrayList<Recept> filterPremaVP(EnumVremePripreme vremePripreme) throws SQLException, Exception {
 		ArrayList<Recept> receptiPremaVP = new ArrayList<>();
-		String upit = "SELECT * FROM recept r WHERE r.vremePripreme LIKE '%"
-				+ vremePripreme.toString() + "%'";
+		String upit = "SELECT * FROM recept r WHERE r.vremePripreme LIKE '%" + vremePripreme.toString() + "%'";
 		Statement s = conn.createStatement();
 		ResultSet rs = s.executeQuery(upit);
 		while (rs.next()) {
@@ -347,7 +351,7 @@ public class DBBroker {
 
 	public ArrayList<Recept> filterPremaVJ(EnumVrsteJela vrstaJela) throws SQLException, Exception {
 		ArrayList<Recept> receptiPremaVJ = new ArrayList<>();
-		String upit = "SELECT * FROM recept r WHERE r.vrstaJela LIKE '"+ vrstaJela.toString() + "'";
+		String upit = "SELECT * FROM recept r WHERE r.vrstaJela LIKE '%" + vrstaJela.toString() + "%'";
 		Statement s = conn.createStatement();
 		ResultSet rs = s.executeQuery(upit);
 		while (rs.next()) {

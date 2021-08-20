@@ -1,6 +1,7 @@
 package rs.ac.bg.fon.nprog.server.niti;
 
 import rs.ac.bg.fon.nprog.server.controller.Controller;
+import rs.ac.bg.fon.nprog.library.domen.EnumKategorijaRecepta;
 import rs.ac.bg.fon.nprog.library.domen.EnumVremePripreme;
 import rs.ac.bg.fon.nprog.library.domen.EnumVrsteJela;
 import rs.ac.bg.fon.nprog.library.domen.Korisnik;
@@ -36,7 +37,7 @@ public class ObradaZahtevaNit extends Thread {
 	@Override
 	public void run() {
 		try {
-			
+
 			while (!kraj) {
 				KlijentskiZahtev kz = primiZahtev();
 				ServerskiOdgovor so = new ServerskiOdgovor();
@@ -44,109 +45,62 @@ public class ObradaZahtevaNit extends Thread {
 				switch (kz.getOperacija()) {
 				case Operacije.PRIJAVI_KORISNIKA:
 					Korisnik neulogovan = (Korisnik) kz.getParametar();
-					Korisnik ulogovan;
-
-					ulogovan = Controller.getInstance().login(neulogovan);
-					so.setOdgovor(ulogovan);
-					if (ulogovan == null) {
-						so.setUspesno(false);
-					} else {
-						so.setUspesno(true);
-					}
+					so = Controller.getInstance().login(neulogovan);
 					break;
+
 				case Operacije.ZAPAMTI_RECEPT:
 					Recept receptNesacuvan = (Recept) kz.getParametar();
-					Recept receptSacuvan;
-
-					receptSacuvan = Controller.getInstance().sacuvajRecept(receptNesacuvan);
-
-					if (receptSacuvan == null) {
-						so.setUspesno(false);
-					} else {
-						so.setUspesno(true);
-					}
+					so = Controller.getInstance().sacuvajRecept(receptNesacuvan);
 					break;
+
 				case Operacije.ZAPAMTI_SASTOJKE:
 					ArrayList<Sastojak> sastojci = (ArrayList<Sastojak>) kz.getParametar();
-					boolean uspesno = Controller.getInstance().sacuvajSastojke(sastojci);
-					so.setOdgovor(uspesno);
+					so = Controller.getInstance().sacuvajSastojke(sastojci);
 					break;
+					
 				case Operacije.VRATI_RECEPTE:
-					ArrayList<Recept> recepti = Controller.getInstance().vratiRecepte();
-					if (recepti == null) {
-						so.setUspesno(false);
-					} else {
-						so.setUspesno(true);
-					}
-					so.setOdgovor(recepti);
+					so=Controller.getInstance().vratiRecepte();
 					break;
+					
 				case Operacije.VRATI_SASTOJKE_RECEPTA:
 					Recept r = (Recept) kz.getParametar();
-					ArrayList<Sastojak> sastojciRecepta = Controller.getInstance().vratiSastojkeRecepta(r);
-//                        if (sastojciRecepta == null) {
-//                            so.setUspesno(false);
-//                        } else {
-//                            so.setUspesno(true);
-//                        }
-					so.setOdgovor(sastojciRecepta);
+					so=Controller.getInstance().vratiSastojkeRecepta(r);
 					break;
 
 				case Operacije.OBRISI_RECEPT:
 					Recept recept = (Recept) kz.getParametar();
-					boolean obrisano = Controller.getInstance().obrisiRecept(recept);
-					if (obrisano) {
-						so.setUspesno(true);
-					}
-					so.setOdgovor(obrisano);
+					so=Controller.getInstance().obrisiRecept(recept);
 					break;
+					
 				case Operacije.IZMENI_RECEPT:
 					Recept receptZaIzmenu = (Recept) kz.getParametar();
-					Recept izmenjen = Controller.getInstance().izmeniRecept(receptZaIzmenu);
-					if (izmenjen != null) {
-						so.setUspesno(true);
-					} else {
-						so.setUspesno(false);
-					}
-					so.setOdgovor(izmenjen);
+					so=Controller.getInstance().izmeniRecept(receptZaIzmenu);
 					break;
+					
 				case Operacije.NADJI_RECEPT_PREMA_NAZIVU:
 					String naziv = (String) kz.getParametar();
-					List<Recept> receptiPoImenu = Controller.getInstance().nadjiReceptPoImenu(naziv);
-					if (!receptiPoImenu.isEmpty()) {
-						so.setOdgovor(receptiPoImenu);
-						so.setUspesno(true);
-					} else {
-						so.setUspesno(false);
-					}
+					so=Controller.getInstance().nadjiReceptPoImenu(naziv);		
 					break;
+					
 				case Operacije.NADJI_RECEPT_PREMA_VREMENU_PRIPREME:
-					EnumVremePripreme vremePripreme = (EnumVremePripreme) kz.getParametar();
-					List<Recept> receptiPoVP = Controller.getInstance().nadjiReceptPoVP(vremePripreme);
-					if (!receptiPoVP.isEmpty()) {
-						so.setOdgovor(receptiPoVP);
-						so.setUspesno(true);
-					} else {
-						so.setUspesno(false);
-					}
+					EnumVremePripreme vp = (EnumVremePripreme) kz.getParametar();
+					so=Controller.getInstance().nadjiReceptPoVP(vp);		
 					break;
+					
 				case Operacije.NADJI_RECEPT_PREMA_VRSTI_JELA:
-					EnumVrsteJela vrstaJela = (EnumVrsteJela) kz.getParametar();
-					List<Recept> receptiPoVJ = Controller.getInstance().nadjiReceptPoVJ(vrstaJela);
-					if (!receptiPoVJ.isEmpty()) {
-						so.setOdgovor(receptiPoVJ);
-						so.setUspesno(true);
-					} else {
-						so.setUspesno(false);
-					}
+					EnumVrsteJela vj = (EnumVrsteJela) kz.getParametar();
+					so=Controller.getInstance().nadjiReceptPoVJ(vj);	
 					break;
+					
 				case Operacije.IZBACI_KLIJENTA:
 					so.setOdgovor(true);
 					kraj = true;
+					break;
+					
+				default:
+					kraj = true;
+					break;
 
-					break;
-					default: kraj = true;
-					break;
-						
 				}
 				posaljiOdgovor(so);
 

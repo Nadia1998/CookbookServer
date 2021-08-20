@@ -1,24 +1,30 @@
 package rs.ac.bg.fon.nprog.server.controller;
 
 import rs.ac.bg.fon.nprog.server.db.DBBroker;
+import rs.ac.bg.fon.nprog.server.so.OpstaSO;
+import rs.ac.bg.fon.nprog.server.so.korisnik.PrijavaKorisnika;
+import rs.ac.bg.fon.nprog.server.so.recept.IzmeniRecept;
+import rs.ac.bg.fon.nprog.server.so.recept.NadjiReceptPoImenu;
+import rs.ac.bg.fon.nprog.server.so.recept.NadjiReceptPremaVremenuPripreme;
+import rs.ac.bg.fon.nprog.server.so.recept.NadjiReceptPremaVrstiJela;
+import rs.ac.bg.fon.nprog.server.so.recept.ObrisiRecept;
+import rs.ac.bg.fon.nprog.server.so.recept.SacuvajRecept;
+import rs.ac.bg.fon.nprog.server.so.recept.VratiRecepte;
+import rs.ac.bg.fon.nprog.server.so.sastojak.SacuvajSastojke;
+import rs.ac.bg.fon.nprog.server.so.sastojak.VratiSastojkeOdredjenogRecepta;
+import rs.ac.bg.fon.nprog.library.domen.EnumKategorijaRecepta;
 import rs.ac.bg.fon.nprog.library.domen.EnumVremePripreme;
 import rs.ac.bg.fon.nprog.library.domen.EnumVrsteJela;
 import rs.ac.bg.fon.nprog.library.domen.Korisnik;
 import rs.ac.bg.fon.nprog.library.domen.Recept;
 import rs.ac.bg.fon.nprog.library.domen.Sastojak;
+import rs.ac.bg.fon.nprog.library.transfer.ServerskiOdgovor;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.text.html.HTMLEditorKit.Parser;
-import org.json.JSONArray;
 import org.json.JSONObject;
-import com.google.gson.Gson;
 import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonWriter;
 
 
 public class Controller {
@@ -40,77 +46,62 @@ public class Controller {
 		return instance;
 	}
 
-
-
-	public Korisnik login(Korisnik neulogovan) throws Exception {
-
-		db.driverUpload();
-		db.connect();
-		List<Korisnik> lista = db.vratiKorisnike();
-		for (Korisnik k : lista) {
-			if (neulogovan.getKorisnickoIme().equals(k.getKorisnickoIme())) {
-				if (neulogovan.getLozinka().equals(k.getLozinka())) {
-					return k;
-				}
-			}
-		}
-		return null;
+	public ServerskiOdgovor login(Korisnik neulogovan) throws Exception {
+		OpstaSO oso=new PrijavaKorisnika();
+		return oso.izvrsiOperaciju(neulogovan);	
 	}
 
-	
-
-	public Recept sacuvajRecept(Recept receptNesacuvan) throws Exception {
-		db.driverUpload();
-		db.connect();
-		int receptId = db.vratiIDRecepta();
-		receptNesacuvan.setReceptId(receptId);
-		Recept sacuvan = db.sacuvajRecept(receptNesacuvan);
-		return sacuvan;
+	public ServerskiOdgovor sacuvajRecept(Recept receptNesacuvan) throws Exception {
+		OpstaSO oso=new SacuvajRecept();
+		return oso.izvrsiOperaciju(receptNesacuvan);	
 	}
 	
-	public boolean sacuvajSastojke(ArrayList<Sastojak> sastojci) throws Exception {
-		db.driverUpload();
-		db.connect();
-		for (Sastojak s : sastojci) {
-			int sastojakID;
-			sastojakID = db.vratiIDSastojka();
-			s.setSastojakId(sastojakID);
-			db.sacuvajSastojak(s);
-
-		}
-		return true;
-
+	public ServerskiOdgovor sacuvajSastojke(ArrayList<Sastojak> sastojci) throws Exception {  
+		OpstaSO oso=new SacuvajSastojke();
+		return oso.izvrsiOperaciju(sastojci);
 	}
 
-
-	public ArrayList<Recept> vratiRecepte() throws Exception {
-		ArrayList<Recept> recepti;
-		db.connect();
-		db.driverUpload();
-		recepti = db.vratiRecepte();
-		return recepti;
-
+	public ServerskiOdgovor vratiRecepte() throws Exception {	
+		OpstaSO oso=new VratiRecepte();
+		return oso.izvrsiOperaciju(null);		
 	}
 
-
-	public ArrayList<Sastojak> vratiSastojkeRecepta(Recept r) throws Exception {
-		ArrayList<Sastojak> sastojci;
-		db.connect();
-		db.driverUpload();
-		sastojci = db.vratiSastojkeRecepta(r);
-		return sastojci;
+	public ServerskiOdgovor vratiSastojkeRecepta(Recept r) throws Exception {
+		OpstaSO oso=new VratiSastojkeOdredjenogRecepta();
+		return oso.izvrsiOperaciju(r);
 	}
 
-	public boolean obrisiRecept(Recept r) throws Exception {
-		db.connect();
-		db.driverUpload();
-		boolean uspesno = db.obrisiRecept(r);
-        if(uspesno) {
+	public ServerskiOdgovor obrisiRecept(Recept r) throws Exception {
+		OpstaSO oso=new ObrisiRecept();
+		ServerskiOdgovor so=oso.izvrsiOperaciju(r);
+        if(so.isUspesno()) {
         	sacuvajUJSON(r);
         }
-		return uspesno;
+		return so;
 	}
 
+	public ServerskiOdgovor izmeniRecept(Recept receptZaIzmenu) throws Exception {
+		OpstaSO oso=new IzmeniRecept();
+		return oso.izvrsiOperaciju(receptZaIzmenu);
+	}
+
+
+	public ServerskiOdgovor nadjiReceptPoImenu(String naziv) throws Exception {
+		OpstaSO oso=new NadjiReceptPoImenu();
+		return oso.izvrsiOperaciju(naziv);
+	}
+
+
+	public ServerskiOdgovor nadjiReceptPoVP(EnumVremePripreme vremePripreme) throws Exception {
+		OpstaSO oso=new NadjiReceptPremaVremenuPripreme();
+		return oso.izvrsiOperaciju(vremePripreme);
+	}
+
+
+	public ServerskiOdgovor nadjiReceptPoVJ(EnumVrsteJela vrstaJela) throws Exception {
+		OpstaSO oso=new NadjiReceptPremaVrstiJela();
+		return oso.izvrsiOperaciju(vrstaJela);
+	}
 	private void sacuvajUJSON(Recept r) {
 		JSONObject receptObrisan = new JSONObject();
         receptObrisan.put("Korisnik:", r.getKorisnik().getIme());
@@ -137,57 +128,5 @@ public class Controller {
         }
 
 		
-	}
-
-
-	public Recept izmeniRecept(Recept receptZaIzmenu) throws Exception {
-		db.connect();
-		db.driverUpload();
-		Recept izmenjen = db.izmeniRecept(receptZaIzmenu);
-		if (izmenjen == null)
-			return null;
-		return izmenjen;
-	}
-
-
-	public List<Recept> nadjiReceptPoImenu(String naziv) throws Exception {
-		ArrayList<Recept> recepti = new ArrayList<>();
-		db.connect();
-		db.driverUpload();
-		try {
-			recepti = db.filterPremaNazivu(naziv);
-		} catch (Exception ex) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-			ex.printStackTrace();
-		}
-		return recepti;
-	}
-
-
-	public List<Recept> nadjiReceptPoVP(EnumVremePripreme vremePripreme) throws Exception {
-		ArrayList<Recept> recepti = new ArrayList<>();
-		db.connect();
-		db.driverUpload();
-		try {
-			recepti = db.filterPremaVP(vremePripreme);
-		} catch (Exception ex) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-			ex.printStackTrace();
-		}
-		return recepti;
-	}
-
-
-	public List<Recept> nadjiReceptPoVJ(EnumVrsteJela vrstaJela) throws Exception {
-		ArrayList<Recept> recepti = new ArrayList<>();
-		db.connect();
-		db.driverUpload();
-		try {
-			recepti = db.filterPremaVJ(vrstaJela);
-		} catch (Exception ex) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-			ex.printStackTrace();
-		}
-		return recepti;
 	}
 }
