@@ -12,7 +12,6 @@ import rs.ac.bg.fon.nprog.server.so.recept.SacuvajRecept;
 import rs.ac.bg.fon.nprog.server.so.recept.VratiRecepte;
 import rs.ac.bg.fon.nprog.server.so.sastojak.SacuvajSastojke;
 import rs.ac.bg.fon.nprog.server.so.sastojak.VratiSastojkeOdredjenogRecepta;
-import rs.ac.bg.fon.nprog.library.domen.EnumKategorijaRecepta;
 import rs.ac.bg.fon.nprog.library.domen.EnumVremePripreme;
 import rs.ac.bg.fon.nprog.library.domen.EnumVrsteJela;
 import rs.ac.bg.fon.nprog.library.domen.Korisnik;
